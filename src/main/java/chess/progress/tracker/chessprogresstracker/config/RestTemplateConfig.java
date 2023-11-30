@@ -10,7 +10,7 @@ public class RestTemplateConfig {
     private static final String CHESS_API = "https://api.chess.com/pub";
 
     @Bean
-    public RestTemplate createRestTemplate(){
+    public RestTemplate createRestTemplate() {
         return new RestTemplateBuilder().rootUri(CHESS_API).build();
     }
 
