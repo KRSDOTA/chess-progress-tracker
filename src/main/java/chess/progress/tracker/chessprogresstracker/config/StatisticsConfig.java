@@ -2,7 +2,6 @@ package chess.progress.tracker.chessprogresstracker.config;
 
 import chess.progress.tracker.chessprogresstracker.statistics.DelegateToChessPubAPIService;
 import chess.progress.tracker.chessprogresstracker.statistics.StatisticsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
