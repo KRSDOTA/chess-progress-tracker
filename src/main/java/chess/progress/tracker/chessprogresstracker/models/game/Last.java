@@ -14,9 +14,7 @@ import java.time.Instant;
 @Data
 public class Last {
 
-    private final Instant date;
-
-    private final Integer rating;
+    private final Performance performance;
 
     private final Integer rd;
 }
