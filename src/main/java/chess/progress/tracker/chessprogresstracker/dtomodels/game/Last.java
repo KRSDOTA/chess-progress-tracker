@@ -1,4 +1,4 @@
-package chess.progress.tracker.chessprogresstracker.models.game;
+package chess.progress.tracker.chessprogresstracker.dtomodels.game;
 
 import lombok.Data;
 
@@ -14,7 +14,9 @@ import java.time.Instant;
 @Data
 public class Last {
 
-    private final Performance performance;
+    private final Instant date;
+
+    private final Integer rating;
 
     private final Integer rd;
 }

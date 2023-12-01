@@ -1,25 +1,26 @@
 package chess.progress.tracker.chessprogresstracker.statistics;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import chess.progress.tracker.chessprogresstracker.dtomodels.Stats;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
 public class StatisticsService {
 
-    private final ObjectMapper objectMapper;
-
     private final RestTemplate restTemplate;
 
-    public StatisticsService(ObjectMapper objectMapper, RestTemplate restTemplate) {
-        this.objectMapper = objectMapper;
+    public StatisticsService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    public String getStatistics(String username){
+    /**
+     * Get the statistics for a given username
+     * @param username username to get statistics for
+     * @return Stats object
+     */
+    public Stats getStatistics(String username) {
         final String url = "/player/" + username + "/stats";
-        String response = restTemplate.getForObject(url, String.class);
-        return response;
+        return restTemplate.getForObject(url, Stats.class);
     }
 
 }

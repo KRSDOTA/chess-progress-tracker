@@ -1,5 +1,6 @@
 package chess.progress.tracker.chessprogresstracker.statistics;
 
+import chess.progress.tracker.chessprogresstracker.dtomodels.Stats;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +18,8 @@ public class StatisticsController {
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<String> getPlayerStats(@PathVariable String username) {
-        String stats = statisticsService.getStatistics(username);
+    public ResponseEntity<Stats> getPlayerStats(@PathVariable String username) {
+        final Stats stats = statisticsService.getStatistics(username);
         return ResponseEntity.ok(stats);
     }
 

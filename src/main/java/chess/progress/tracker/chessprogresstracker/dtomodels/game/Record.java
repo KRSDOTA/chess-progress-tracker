@@ -1,4 +1,4 @@
-package chess.progress.tracker.chessprogresstracker.models.game;
+package chess.progress.tracker.chessprogresstracker.dtomodels.game;
 
 import lombok.Data;
 
@@ -18,7 +18,7 @@ public class Record {
 
     private final Integer loss;
 
-    private final Integer timePerMove;
+    private final Integer time_per_move;
 
-    private final Double timeoutPercentage;
+    private final Double timeout_percentage;
 }

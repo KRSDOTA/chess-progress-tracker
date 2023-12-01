@@ -1,4 +1,4 @@
-package chess.progress.tracker.chessprogresstracker.models.game;
+package chess.progress.tracker.chessprogresstracker.dtomodels.game;
 
 import lombok.Data;
 
@@ -19,5 +19,5 @@ public class Tornament {
 
     private final Integer points;
 
-    private final Integer highestFinish;
+    private final Integer highest_finish;
 }

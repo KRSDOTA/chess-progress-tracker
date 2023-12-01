@@ -1,0 +1,1 @@
+# Directory Contains the transitory representation of the JSON objects grabbed from the chess.com API
