@@ -30,7 +30,7 @@ For now I'm not too concered about picking a frontend framework. For now the pro
 2) Build the service around the chess.com endpoints
 3) Build a webapp which consumes the `progress-api` and presents them nicely to users
 
-## Quick game information
+## Holostic player view insight function
 An interesting point raised by a friend of mine is that it would be really nice to see at glance, what openings a 
 player enjoys, how frequently they ran it over a period of time, and often they win with it.
 
