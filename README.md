@@ -30,14 +30,14 @@ For now I'm not too concered about picking a frontend framework. For now the pro
 2) Build the service around the chess.com endpoints
 3) Build a webapp which consumes the `progress-api` and presents them nicely to users
 
-## Holostic player view insight function
-An interesting point raised by a friend of mine is that it would be really nice to see at glance, what openings a 
+## Holistic player view insight function
+An interesting point raised by a friend of mine is that it would be really nice to see at a glance, what openings a 
 player enjoys, how frequently they ran it over a period of time, and often they win with it.
 
 As you enter a game with an opponent in a rapid, bullet or blitz format player in question, 
 we could facilitate that the aforementioned information quickly, giving the searcher a holostic view of what to expect 
 in terms of playing from their opponent granting a useful edge. The idea being similar to the OpenDota tool, which informs
-players of what opponents like to pick. There are some implications of this which need sorting through:
+players of what opponents like to pick during the drafting stage. There are some implications of this which need sorting through:
 
 1) How would this information be available quickly? This kind of on-the-fly computation is not going to be "Quick" by 
     any means, especially if we try and do all data processing within the life of a single request, it simply won't deliver the
@@ -45,9 +45,12 @@ players of what opponents like to pick. There are some implications of this whic
     the live request, however this seems unreasonable and to be quite frank impossible given the size of the chess.com player pool. 
 
 2) To make matters more complicated, the chess.com games archive API seems to only allow you to query based on "yy/mm". 
-   Which means a single query is going to return a data for an entire month, which is potentially is a lot. that the chess.com API only provides archived data in monthly batches.
-    
-3) The game format is written in a legacy `.pgn' format 
+   Which means a single query is going to return a data for an entire month. It's not possible to filter down by day.
+
+3) The game format is written in a legacy `.pgn' format, might have to write our own parser :( 
+
+4) How should this look and feel? Need to design the "Player insight screen(s)" more formally
+
 
 
 
