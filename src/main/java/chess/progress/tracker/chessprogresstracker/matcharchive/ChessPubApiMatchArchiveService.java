@@ -31,10 +31,18 @@ public class ChessPubApiMatchArchiveService implements MatchArchiveService {
                 .append(username)
                 .append("/games/")
                 .append("/")
-                .append(currentDate.getDayOfMonth())
+                .append(currentDate.getYear())
                 .append("/")
-                .append(currentDate.getYear());
+                .append(getZeroPaddedMonthValue(currentDate));
         return matchUrlBuilder.toString();
+    }
+
+    private String getZeroPaddedMonthValue(LocalDate date) {
+        if(date.getMonthValue() < 10 ) {
+            return "0" + date.getMonthValue();
+        }
+
+        return String.valueOf(date.getMonthValue());
     }
 
     @Override
