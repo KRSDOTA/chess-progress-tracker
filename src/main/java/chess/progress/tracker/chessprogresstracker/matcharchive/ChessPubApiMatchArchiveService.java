@@ -30,7 +30,6 @@ public class ChessPubApiMatchArchiveService implements MatchArchiveService {
                 .append("/player/")
                 .append(username)
                 .append("/games/")
-                .append("/")
                 .append(currentDate.getYear())
                 .append("/")
                 .append(getZeroPaddedMonthValue(currentDate))
