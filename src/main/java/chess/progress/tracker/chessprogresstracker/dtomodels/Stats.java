@@ -1,6 +1,8 @@
 package chess.progress.tracker.chessprogresstracker.dtomodels;
 
 
+import chess.progress.tracker.chessprogresstracker.dtomodels.PuzzleRush;
+import chess.progress.tracker.chessprogresstracker.dtomodels.Tactics;
 import chess.progress.tracker.chessprogresstracker.dtomodels.game.Game;
 import lombok.Data;
 import lombok.NoArgsConstructor;
