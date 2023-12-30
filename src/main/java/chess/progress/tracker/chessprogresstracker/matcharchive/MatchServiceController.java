@@ -18,7 +18,7 @@ public class MatchServiceController {
     }
 
     @GetMapping("/{username}/{numberOfGames}")
-    public ResponseEntity<List<Match>> getRecentMatches(@PathVariable String username, @PathVariable Integer numberOfGames){
+    public ResponseEntity<List<Match>> getRecentMatches(@PathVariable String username, @PathVariable Integer numberOfGames) {
         final List<Match> matches = matchArchiveService.getMostRecentMatches(username, numberOfGames);
         return ResponseEntity.ok(matches);
     }
