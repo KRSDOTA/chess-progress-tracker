@@ -35,16 +35,14 @@ public class ChessPubApiMatchArchiveService implements MatchArchiveService {
         return matches.subList(0, numberOfGames);
     }
 
-    private List<Match> getGamesFromChessApi(String username, LocalDate date){
+    private List<Match> getGamesFromChessApi(String username, LocalDate date) {
         final String url = matchEndpointUrlBuilder.buildGamesUrl(username, date);
         final Games games = restTemplate.getForObject(url, Games.class);
         return games == null ? Collections.emptyList() : games.getGames();
     }
 
-
-
     @Override
-    public List<Match> getAllMatches(String username, Month month, Year year) {
-        return null;
+    public List<Match> getAllMatches(String username, LocalDate localDate) {
+        return getGamesFromChessApi(username, localDate);
     }
 }
