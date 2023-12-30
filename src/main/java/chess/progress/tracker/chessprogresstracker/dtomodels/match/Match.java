@@ -13,7 +13,7 @@ public class Match {
 
     private String pgn;
 
-    private Integer time_control;
+    private String time_control;
 
     private Instant end_time;
 

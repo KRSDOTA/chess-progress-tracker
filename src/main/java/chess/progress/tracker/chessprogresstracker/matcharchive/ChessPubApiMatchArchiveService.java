@@ -26,15 +26,15 @@ public class ChessPubApiMatchArchiveService implements MatchArchiveService {
         final Instant currentTime = Instant.now();
         final LocalDate currentDate = LocalDate.ofInstant(currentTime, ZoneId.of("UTC+1"));
         final StringBuilder matchUrlBuilder = new StringBuilder();
-        matchUrlBuilder
+        return matchUrlBuilder
                 .append("/player/")
                 .append(username)
                 .append("/games/")
                 .append("/")
                 .append(currentDate.getYear())
                 .append("/")
-                .append(getZeroPaddedMonthValue(currentDate));
-        return matchUrlBuilder.toString();
+                .append(getZeroPaddedMonthValue(currentDate))
+                .toString();
     }
 
     private String getZeroPaddedMonthValue(LocalDate date) {
