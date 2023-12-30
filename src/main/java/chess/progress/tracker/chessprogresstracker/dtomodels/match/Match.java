@@ -11,8 +11,6 @@ import java.util.UUID;
 public class Match {
     private String url;
 
-//    private PGN pgn;
-
     private String pgn;
 
     private Integer time_control;

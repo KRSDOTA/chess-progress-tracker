@@ -4,11 +4,11 @@ import chess.progress.tracker.chessprogresstracker.dtomodels.Stats;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-public class DelegateToChessPubAPIService implements StatisticsService {
+public class ChessApiStatsIService implements StatisticsService {
 
     private final RestTemplate restTemplate;
 
-    public DelegateToChessPubAPIService(RestTemplate restTemplate) {
+    public ChessApiStatsIService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
