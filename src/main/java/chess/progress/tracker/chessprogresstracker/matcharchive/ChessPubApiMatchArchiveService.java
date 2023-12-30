@@ -5,44 +5,27 @@ import chess.progress.tracker.chessprogresstracker.dtomodels.match.Match;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.*;
+import java.util.Collections;
 import java.util.List;
 
 public class ChessPubApiMatchArchiveService implements MatchArchiveService {
 
     private final RestTemplate restTemplate;
+    private final MatchEndpointUrlBuilder matchEndpointUrlBuilder;
 
-    public ChessPubApiMatchArchiveService(RestTemplate restTemplate) {
+    public ChessPubApiMatchArchiveService(RestTemplate restTemplate,
+                                          MatchEndpointUrlBuilder matchEndpointUrlBuilder) {
         this.restTemplate = restTemplate;
+        this.matchEndpointUrlBuilder = matchEndpointUrlBuilder;
     }
 
     @Override
     public List<Match> getMostRecentMatches(String username, Integer numberOfGames) {
-        final String url = buildGamesUrl(username);
+        final String url = matchEndpointUrlBuilder.buildGamesUrl(username, LocalDate.now());
         final Games games = restTemplate.getForObject(url, Games.class);
-        return games.getGames();
+        return games == null ? Collections.emptyList() : games.getGames();
     }
 
-    private String buildGamesUrl(String username) {
-        final Instant currentTime = Instant.now();
-        final LocalDate currentDate = LocalDate.ofInstant(currentTime, ZoneId.of("UTC+1"));
-        final StringBuilder matchUrlBuilder = new StringBuilder();
-        return matchUrlBuilder
-                .append("/player/")
-                .append(username)
-                .append("/games/")
-                .append(currentDate.getYear())
-                .append("/")
-                .append(getZeroPaddedMonthValue(currentDate))
-                .toString();
-    }
-
-    private String getZeroPaddedMonthValue(LocalDate date) {
-        if(date.getMonthValue() < 10 ) {
-            return "0" + date.getMonthValue();
-        }
-
-        return String.valueOf(date.getMonthValue());
-    }
 
     @Override
     public List<Match> getAllMatches(String username, Month month, Year year) {
