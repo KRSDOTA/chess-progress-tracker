@@ -1,4 +1,4 @@
-package chess.progress.tracker.chessprogresstracker.dtomodels;
+package chess.progress.tracker.chessprogresstracker.dtomodels.statistics;
 
 import chess.progress.tracker.chessprogresstracker.dtomodels.game.Performance;
 import lombok.Data;

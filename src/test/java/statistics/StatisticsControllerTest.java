@@ -1,6 +1,6 @@
 package statistics;
 
-import chess.progress.tracker.chessprogresstracker.dtomodels.Stats;
+import chess.progress.tracker.chessprogresstracker.dtomodels.statistics.Stats;
 import chess.progress.tracker.chessprogresstracker.statistics.StatisticsController;
 import chess.progress.tracker.chessprogresstracker.statistics.StatisticsService;
 import org.junit.jupiter.api.Test;

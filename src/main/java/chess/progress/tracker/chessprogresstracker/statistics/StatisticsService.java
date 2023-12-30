@@ -1,6 +1,6 @@
 package chess.progress.tracker.chessprogresstracker.statistics;
 
-import chess.progress.tracker.chessprogresstracker.dtomodels.Stats;
+import chess.progress.tracker.chessprogresstracker.dtomodels.statistics.Stats;
 
 public interface StatisticsService {
 
