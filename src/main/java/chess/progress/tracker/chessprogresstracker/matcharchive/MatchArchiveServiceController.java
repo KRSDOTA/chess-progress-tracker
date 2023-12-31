@@ -9,11 +9,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/matches")
 @CrossOrigin(value = "http://localhost:3000")
-public class MatchServiceController {
+public class MatchArchiveServiceController {
 
     private final MatchArchiveService matchArchiveService;
 
-    public MatchServiceController(MatchArchiveService matchArchiveService) {
+    public MatchArchiveServiceController(MatchArchiveService matchArchiveService) {
         this.matchArchiveService = matchArchiveService;
     }
 

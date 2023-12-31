@@ -19,6 +19,7 @@ public interface MatchArchiveService {
     /**
      * Gets the previous 30 days worth of match data for the given player in ascending order
      * @param username username of chess player to get data for
+     * @param localDate startingPoint
      */
     List<Match> getAllMatches(String username, LocalDate localDate);
 
