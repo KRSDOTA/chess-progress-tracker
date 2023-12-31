@@ -11,11 +11,15 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -87,6 +91,17 @@ public class ChessPubApiMatchServiceTest {
         final List<Match> matchList = chessPubApiMatchArchiveService.getAllMatches(username, localDate);
 
         assertThat(matchList.get(0).compareTo(matchList.get(1))).isEqualTo(-1);
+    }
+
+    @Test
+    void shouldThrowIllegalStateExceptionWhenGamesIsNull() {
+        final String username = "something";
+        final LocalDate localDate = LocalDate.of(2000, 1, 12);
+        final String fakeUrl = "/player/" + username + "/games/" + localDate.getYear() + "/" + localDate.getMonthValue();
+        when(matchEndpointUrlBuilder.buildGamesUrl(eq(username), any())).thenReturn(fakeUrl);
+        when(restTemplate.getForObject(fakeUrl, Games.class)).thenReturn(null);
+
+        assertThrows(IllegalStateException.class, () -> chessPubApiMatchArchiveService.getMostRecentMatches(username, 1));
     }
 
 
