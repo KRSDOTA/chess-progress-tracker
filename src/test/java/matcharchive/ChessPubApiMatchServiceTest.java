@@ -75,7 +75,7 @@ public class ChessPubApiMatchServiceTest {
         when(matchEndpointUrlBuilder.buildGamesUrl(eq(username), any())).thenReturn(fakeUrl);
         returnFakeGamesWithUrlCall(fakeUrl);
 
-        final List<Match> matchList = chessPubApiMatchArchiveService.getAllMatches(username, localDate);
+        final List<Match> matchList = chessPubApiMatchArchiveService.getAllMatchesForMonthAndYear(username, localDate);
 
         assertThat(matchList).hasSize(2);
     }
@@ -88,7 +88,7 @@ public class ChessPubApiMatchServiceTest {
         when(matchEndpointUrlBuilder.buildGamesUrl(eq(username), any())).thenReturn(fakeUrl);
         returnFakeGamesWithUrlCall(fakeUrl);
 
-        final List<Match> matchList = chessPubApiMatchArchiveService.getAllMatches(username, localDate);
+        final List<Match> matchList = chessPubApiMatchArchiveService.getAllMatchesForMonthAndYear(username, localDate);
 
         assertThat(matchList.get(0).compareTo(matchList.get(1))).isEqualTo(-1);
     }

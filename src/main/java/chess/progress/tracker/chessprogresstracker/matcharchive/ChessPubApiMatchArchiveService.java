@@ -36,8 +36,8 @@ public class ChessPubApiMatchArchiveService implements MatchArchiveService {
     }
 
     private List<Match> getGamesFromChessApi(String username, LocalDate date) {
-        final String url = matchEndpointUrlBuilder.buildGamesUrl(username, date);
-        final Games games = restTemplate.getForObject(url, Games.class);
+        final String matchUrl = matchEndpointUrlBuilder.buildGamesUrl(username, date);
+        final Games games = restTemplate.getForObject(matchUrl, Games.class);
         if(games == null) {
             throw new IllegalStateException("No games found");
         }
@@ -46,7 +46,7 @@ public class ChessPubApiMatchArchiveService implements MatchArchiveService {
     }
 
     @Override
-    public List<Match> getAllMatches(String username, LocalDate localDate) {
+    public List<Match> getAllMatchesForMonthAndYear(String username, LocalDate localDate) {
         return getGamesFromChessApi(username, localDate);
     }
 }

@@ -4,6 +4,7 @@ import chess.progress.tracker.chessprogresstracker.Timezone.TimezoneService;
 import chess.progress.tracker.chessprogresstracker.dtomodels.match.Match;
 import chess.progress.tracker.chessprogresstracker.matcharchive.MatchArchiveService;
 import chess.progress.tracker.chessprogresstracker.ratingchange.MatchArchiveRatingChangeService;
+import chess.progress.tracker.chessprogresstracker.ratingchange.RatingChange;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,9 +14,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Set;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -42,10 +49,22 @@ public class MatchArchiveRatingChangeServiceTest {
     @Test
     void shouldCorrectlyConstructRatingChangeSetFromMatchData() {
         final String username = "something";
-        final Instant lowerBound = Instant.now().minusSeconds(60*60*24*2);
-        final Instant upperBound = Instant.now();
+        final LocalDate lowerBoundDate = LocalDate.of(2023, 12, 20);
+        final LocalDate upperBoundDate = LocalDate.of(2023, 12, 28);
+        final Instant lowerBound = lowerBoundDate.atStartOfDay().toInstant(ZoneOffset.UTC);
+        final Instant upperBound = upperBoundDate.atStartOfDay().toInstant(ZoneOffset.UTC);
 
-        when(matchArchiveRatingChangeService.getCrossDisciplineChangesForInterval(username, lowerBound, upperBound)).thenReturn(null);
+        when(matchArchiveService.getAllMatchesForMonthAndYear(eq(username), any())).thenReturn(matchData);
+
+        final Set<RatingChange> actualRatingChangeSet = matchArchiveRatingChangeService.getCrossDisciplineChangesForInterval(username, lowerBound, upperBound);
+
+        assertMatchesLayWithinDefinedBounds(lowerBound, upperBound, actualRatingChangeSet);
+    }
+
+    private void assertMatchesLayWithinDefinedBounds(Instant lowerBound, Instant upperBound, Set<RatingChange> ratingChangeSet){
+//        ratingChangeSet.forEach(ratingChange -> {
+//            assertThat(ratingChange.)
+//        });
     }
 
 }
