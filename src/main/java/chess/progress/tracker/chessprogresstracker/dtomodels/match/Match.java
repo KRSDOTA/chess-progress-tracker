@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-public class Match {
+public class Match implements Comparable<Match> {
     private String url;
 
     private String pgn;
@@ -36,4 +36,9 @@ public class Match {
     private PlayerDetails white;
 
     private PlayerDetails black;
+
+    @Override
+    public int compareTo(Match match) {
+        return match.getEnd_time().compareTo(getEnd_time());
+    }
 }

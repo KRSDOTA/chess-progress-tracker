@@ -38,7 +38,11 @@ public class ChessPubApiMatchArchiveService implements MatchArchiveService {
     private List<Match> getGamesFromChessApi(String username, LocalDate date) {
         final String url = matchEndpointUrlBuilder.buildGamesUrl(username, date);
         final Games games = restTemplate.getForObject(url, Games.class);
-        return games == null ? Collections.emptyList() : games.getGames().stream().sorted((match1, match2) ->  match2.getEnd_time().getNano() - match1.getEnd_time().getNano()).toList();
+        if(games == null) {
+            throw new IllegalStateException("No games found");
+        }
+        Collections.sort(games.getGames());
+        return games.getGames();
     }
 
     @Override
