@@ -5,7 +5,9 @@ import chess.progress.tracker.chessprogresstracker.matcharchive.MatchArchiveServ
 import chess.progress.tracker.chessprogresstracker.ratingchange.MatchArchiveRatingChangeService;
 import chess.progress.tracker.chessprogresstracker.ratingchange.RatingChangeService;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class RatingChangeConfig {
 
     @Bean
