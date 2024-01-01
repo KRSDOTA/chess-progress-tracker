@@ -2,9 +2,11 @@ package chess.progress.tracker.chessprogresstracker.config;
 
 import chess.progress.tracker.chessprogresstracker.Timezone.TimezoneService;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.time.ZoneId;
 
+@Configuration
 public class TimezoneConfig {
 
     /**
