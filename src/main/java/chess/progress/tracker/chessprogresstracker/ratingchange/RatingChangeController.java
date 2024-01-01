@@ -18,8 +18,8 @@ public class RatingChangeController {
     }
 
     @GetMapping("/{username}/start/{start}/end/{end}")
-    public ResponseEntity<Set<RatingChange>> getRatingChangesAcrossDisciplines(@PathVariable String username, @PathVariable Instant start, @PathVariable Instant end) {
-        final Set<RatingChange> ratingChangeSet = ratingChangeService.getCrossDisciplineChangesForInterval(username, start, end);
+    public ResponseEntity<Set<RatingChange>> getRatingChangesAcrossDisciplines(@PathVariable String username, @PathVariable String start, @PathVariable String end) {
+        final Set<RatingChange> ratingChangeSet = ratingChangeService.getCrossDisciplineChangesForInterval(username, Instant.parse(start), Instant.parse(end));
         return ResponseEntity.ok(ratingChangeSet);
     }
 
