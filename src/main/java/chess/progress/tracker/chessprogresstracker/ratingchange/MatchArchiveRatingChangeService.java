@@ -44,7 +44,32 @@ public class MatchArchiveRatingChangeService implements RatingChangeService {
                 .filter(match -> doesMatchLayWithinSpecifiedRange(match, start, end))
                 .collect(Collectors.groupingBy(Match::getTime_class));
 
+        matchesByDiscipline.forEach((discipline, disciplineMatches) -> {
+            final RatingChange ratingChange = mapToRatingChange(discipline, disciplineMatches, username);
+            ratingChangeSet.add(ratingChange);
+        });
+
         return ratingChangeSet;
+    }
+
+    private RatingChange mapToRatingChange(String discipline, List<Match> disciplineMatches, String username) {
+        final RatingChange ratingChange = new RatingChange();
+        ratingChange.setDiscipline(Discipline.valueOf(discipline.toUpperCase()));
+
+        final List<Integer> pointChangesAcrossGames = disciplineMatches
+                .stream()
+                .map(match -> findColourPlayerAndReturnRating(match, username))
+                .toList();
+
+        ratingChange.setPoints(pointChangesAcrossGames);
+        return ratingChange;
+    }
+
+    private Integer findColourPlayerAndReturnRating(Match match, String username) {
+        if (match.getBlack().getUsername().equalsIgnoreCase(username)) {
+            return match.getBlack().getRating();
+        }
+        return match.getWhite().getRating();
     }
 
     private boolean rangeIsContainedWithinASingleMonth(LocalDate lower, LocalDate upper) {

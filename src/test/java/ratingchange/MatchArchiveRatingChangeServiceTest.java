@@ -40,6 +40,9 @@ public class MatchArchiveRatingChangeServiceTest {
     private final ZoneId zoneId = ZoneId.of("UTC+1");
 
     private List<Match> matchData;
+
+    private final String username = "hikaru"; // has to be this in order to match the test data
+
     @BeforeEach
     void setUp() throws IOException {
         when(timezoneService.getZoneId()).thenReturn(zoneId);
@@ -48,7 +51,6 @@ public class MatchArchiveRatingChangeServiceTest {
 
     @Test
     void shouldCorrectlyConstructRatingChangeSetFromMatchData() {
-        final String username = "something";
         final LocalDate lowerBoundDate = LocalDate.of(2023, 12, 20);
         final LocalDate upperBoundDate = LocalDate.of(2023, 12, 28);
         final Instant lowerBound = lowerBoundDate.atStartOfDay().toInstant(ZoneOffset.UTC);
