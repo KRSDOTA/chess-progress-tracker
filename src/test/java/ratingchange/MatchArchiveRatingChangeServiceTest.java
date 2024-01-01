@@ -50,7 +50,7 @@ public class MatchArchiveRatingChangeServiceTest {
     }
 
     @Test
-    void shouldCorrectlyConstructRatingChangeSetFromMatchData() {
+    void ratingChangeSetShouldNotBeEmptyAndHaveSizeOfThree() {
         final LocalDate lowerBoundDate = LocalDate.of(2023, 12, 20);
         final LocalDate upperBoundDate = LocalDate.of(2023, 12, 28);
         final Instant lowerBound = lowerBoundDate.atStartOfDay().toInstant(ZoneOffset.UTC);
@@ -60,13 +60,8 @@ public class MatchArchiveRatingChangeServiceTest {
 
         final Set<RatingChange> actualRatingChangeSet = matchArchiveRatingChangeService.getCrossDisciplineChangesForInterval(username, lowerBound, upperBound);
 
-        assertMatchesLayWithinDefinedBounds(lowerBound, upperBound, actualRatingChangeSet);
-    }
-
-    private void assertMatchesLayWithinDefinedBounds(Instant lowerBound, Instant upperBound, Set<RatingChange> ratingChangeSet){
-//        ratingChangeSet.forEach(ratingChange -> {
-//            assertThat(ratingChange.)
-//        });
+        assertThat(actualRatingChangeSet).isNotEmpty();
+        assertThat(actualRatingChangeSet).hasSize(3);
     }
 
 }

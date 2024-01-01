@@ -23,8 +23,6 @@ public class MatchArchiveRatingChangeService implements RatingChangeService {
 
     @Override
     public Set<RatingChange> getCrossDisciplineChangesForInterval(String username, Instant start, Instant end) {
-        final Set<RatingChange> ratingChangeSet = new HashSet<>();
-
         final LocalDate lowerBound = LocalDate.ofInstant(start, timezoneService.getZoneId());
         final LocalDate upperBound = LocalDate.ofInstant(end, timezoneService.getZoneId());
         final List<Match> matches = new ArrayList<>();
@@ -39,6 +37,8 @@ public class MatchArchiveRatingChangeService implements RatingChangeService {
                 matches.addAll(matchArchiveService.getAllMatchesForMonthAndYear(username, newDateToQuery));
             }
         }
+
+        final Set<RatingChange> ratingChangeSet = new HashSet<>();
 
         final Map<String, List<Match>> matchesByDiscipline = matches.stream()
                 .filter(match -> doesMatchLayWithinSpecifiedRange(match, start, end))
