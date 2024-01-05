@@ -13,10 +13,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Set;
 
@@ -53,12 +51,10 @@ public class MatchArchiveRatingChangeServiceTest {
     void ratingChangeSetShouldNotBeEmptyAndHaveSizeOfThree() {
         final LocalDate lowerBoundDate = LocalDate.of(2023, 12, 20);
         final LocalDate upperBoundDate = LocalDate.of(2023, 12, 28);
-        final Instant lowerBound = lowerBoundDate.atStartOfDay().toInstant(ZoneOffset.UTC);
-        final Instant upperBound = upperBoundDate.atStartOfDay().toInstant(ZoneOffset.UTC);
 
         when(matchArchiveService.getAllMatchesForMonthAndYear(eq(username), any())).thenReturn(matchData);
 
-        final Set<RatingChange> actualRatingChangeSet = matchArchiveRatingChangeService.getCrossDisciplineChangesForInterval(username, lowerBound, upperBound);
+        final Set<RatingChange> actualRatingChangeSet = matchArchiveRatingChangeService.getCrossDisciplineChangesForInterval(username, lowerBoundDate, upperBoundDate);
 
         assertThat(actualRatingChangeSet).isNotEmpty();
         assertThat(actualRatingChangeSet).hasSize(3);

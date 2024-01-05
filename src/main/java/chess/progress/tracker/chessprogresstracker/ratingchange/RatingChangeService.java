@@ -1,6 +1,7 @@
 package chess.progress.tracker.chessprogresstracker.ratingchange;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Set;
 
 /**
@@ -14,6 +15,6 @@ public interface RatingChangeService {
      * @param start closed interval lower bound
      * @param end closed interval upper bound
      */
-    Set<RatingChange> getCrossDisciplineChangesForInterval(String username, Instant start, Instant end);
+    Set<RatingChange> getCrossDisciplineChangesForInterval(String username, LocalDate start, LocalDate end);
 
 }

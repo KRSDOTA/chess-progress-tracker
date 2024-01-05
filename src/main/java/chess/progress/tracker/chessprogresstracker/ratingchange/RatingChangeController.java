@@ -3,7 +3,7 @@ package chess.progress.tracker.chessprogresstracker.ratingchange;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Set;
 
 @RestController
@@ -18,8 +18,8 @@ public class RatingChangeController {
     }
 
     @GetMapping("/{username}/start/{start}/end/{end}")
-    public ResponseEntity<Set<RatingChange>> getRatingChangesAcrossDisciplines(@PathVariable String username, @PathVariable String start, @PathVariable String end) {
-        final Set<RatingChange> ratingChangeSet = ratingChangeService.getCrossDisciplineChangesForInterval(username, Instant.parse(start), Instant.parse(end));
+    public ResponseEntity<Set<RatingChange>> getRatingChangesAcrossDisciplines(@PathVariable String username, @PathVariable LocalDate start, @PathVariable LocalDate end) {
+        final Set<RatingChange> ratingChangeSet = ratingChangeService.getCrossDisciplineChangesForInterval(username, start, end);
         return ResponseEntity.ok(ratingChangeSet);
     }
 
