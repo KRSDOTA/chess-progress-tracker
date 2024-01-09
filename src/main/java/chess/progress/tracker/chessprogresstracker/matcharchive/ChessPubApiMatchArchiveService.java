@@ -41,7 +41,6 @@ public class ChessPubApiMatchArchiveService implements MatchArchiveService {
         if(games == null) {
             throw new IllegalStateException("No games found");
         }
-        Collections.sort(games.getGames());
         return games.getGames();
     }
 

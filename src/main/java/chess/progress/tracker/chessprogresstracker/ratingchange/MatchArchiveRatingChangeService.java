@@ -30,10 +30,11 @@ public class MatchArchiveRatingChangeService implements RatingChangeService {
         } else {
             long monthsBetween = ChronoUnit.MONTHS.between(lowerBound, upperBound);
 
-            for (int i = 0; i < monthsBetween; i++) {
+            for (int i = 0; i <= monthsBetween; i++) {
                 final LocalDate newDateToQuery = lowerBound.plusMonths(i);
                 matches.addAll(matchArchiveService.getAllMatchesForMonthAndYear(username, newDateToQuery));
             }
+            Collections.sort(matches);
         }
 
         final Set<RatingChange> ratingChangeSet = new HashSet<>();
@@ -51,6 +52,15 @@ public class MatchArchiveRatingChangeService implements RatingChangeService {
         });
 
         return ratingChangeSet;
+    }
+
+    private boolean rangeIsContainedWithinASingleMonth(LocalDate lower, LocalDate upper) {
+        return lower.getMonthValue() == upper.getMonthValue() && lower.getYear() == upper.getYear();
+    }
+
+
+    private boolean doesMatchLayWithinSpecifiedRange(Match match, Instant lower, Instant upper) {
+        return lower.compareTo(match.getEnd_time()) <= 0 && upper.compareTo(match.getEnd_time()) >= 0;
     }
 
     private RatingChange mapToRatingChange(String discipline, List<Match> disciplineMatches, String username) {
@@ -71,13 +81,5 @@ public class MatchArchiveRatingChangeService implements RatingChangeService {
             return match.getBlack().getRating();
         }
         return match.getWhite().getRating();
-    }
-
-    private boolean rangeIsContainedWithinASingleMonth(LocalDate lower, LocalDate upper) {
-        return lower.getMonthValue() == upper.getMonthValue() && lower.getYear() == upper.getYear();
-    }
-
-    private boolean doesMatchLayWithinSpecifiedRange(Match match, Instant lower, Instant upper) {
-        return lower.compareTo(match.getEnd_time()) <= 0 && upper.compareTo(match.getEnd_time()) >= 0;
     }
 }

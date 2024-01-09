@@ -21,7 +21,7 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class MatchArchiveRatingChangeServiceTest {
@@ -58,6 +58,32 @@ public class MatchArchiveRatingChangeServiceTest {
 
         assertThat(actualRatingChangeSet).isNotEmpty();
         assertThat(actualRatingChangeSet).hasSize(3);
+    }
+
+    @Test 
+    void whenRangeIsContainedWithinASingleMonthThenMatchArchiveServiceShouldOnlyBeCalledOnce() {
+        final LocalDate lowerBoundDate = LocalDate.of(2023, 12, 20);
+        final LocalDate upperBoundDate = LocalDate.of(2023, 12, 28);
+
+        when(matchArchiveService.getAllMatchesForMonthAndYear(eq(username), any())).thenReturn(matchData);
+
+        matchArchiveRatingChangeService.getCrossDisciplineChangesForInterval(username, lowerBoundDate, upperBoundDate);
+
+        // verify that the match archive service was only called once
+        verify(matchArchiveService).getAllMatchesForMonthAndYear(eq(username), any());
+    }
+
+    @Test 
+    void whenRangeIsNotContainedWithinASingleMonthThenMatchArchiveServiceShouldBeCalledMultipleTimes() {
+        final LocalDate lowerBoundDate = LocalDate.of(2023, 12, 20);
+        final LocalDate upperBoundDate = LocalDate.of(2024, 1, 28);
+
+        when(matchArchiveService.getAllMatchesForMonthAndYear(eq(username), any())).thenReturn(matchData);
+
+        matchArchiveRatingChangeService.getCrossDisciplineChangesForInterval(username, lowerBoundDate, upperBoundDate);
+
+        // verify service was called twice, one for each month between the lower and upper bound inclusive
+        verify(matchArchiveService, times(2)).getAllMatchesForMonthAndYear(eq(username), any());
     }
 
 }
