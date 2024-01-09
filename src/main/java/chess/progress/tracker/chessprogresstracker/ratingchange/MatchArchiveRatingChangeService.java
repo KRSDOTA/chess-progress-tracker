@@ -23,6 +23,21 @@ public class MatchArchiveRatingChangeService implements RatingChangeService {
 
     @Override
     public Set<RatingChange> getCrossDisciplineChangesForInterval(String username, LocalDate lowerBound, LocalDate upperBound) {
+        final List<Match> matches = getAllMatchesForDefinedInterval(username, lowerBound, upperBound);
+
+        final Map<String, List<Match>> matchesByDiscipline = filterMatchesOutsideTimeRangeAndGroupByDiscipline(matches, lowerBound, upperBound);
+
+        final Set<RatingChange> ratingChangeSet = new HashSet<>();
+
+        matchesByDiscipline.forEach((discipline, disciplineMatches) -> {
+            final RatingChange ratingChange = mapToRatingChange(discipline, disciplineMatches, username);
+            ratingChangeSet.add(ratingChange);
+        });
+
+        return ratingChangeSet;
+    }
+
+    private List<Match> getAllMatchesForDefinedInterval(String username, LocalDate lowerBound, LocalDate upperBound) {
         final List<Match> matches = new ArrayList<>();
 
         if (rangeIsContainedWithinASingleMonth(lowerBound, upperBound)) {
@@ -37,21 +52,16 @@ public class MatchArchiveRatingChangeService implements RatingChangeService {
             Collections.sort(matches);
         }
 
-        final Set<RatingChange> ratingChangeSet = new HashSet<>();
+        return matches;
+    }
 
+    private Map<String, List<Match>> filterMatchesOutsideTimeRangeAndGroupByDiscipline(List<Match> matches, LocalDate lowerBound, LocalDate upperBound){
         final Instant lowerBoundInstant = lowerBound.atStartOfDay(timezoneService.getZoneId()).toInstant();
         final Instant upperBoundInstant = upperBound.atStartOfDay(timezoneService.getZoneId()).toInstant();
 
-        final Map<String, List<Match>> matchesByDiscipline = matches.stream()
+        return matches.stream()
                 .filter(match -> doesMatchLayWithinSpecifiedRange(match, lowerBoundInstant, upperBoundInstant))
                 .collect(Collectors.groupingBy(Match::getTime_class));
-
-        matchesByDiscipline.forEach((discipline, disciplineMatches) -> {
-            final RatingChange ratingChange = mapToRatingChange(discipline, disciplineMatches, username);
-            ratingChangeSet.add(ratingChange);
-        });
-
-        return ratingChangeSet;
     }
 
     private boolean rangeIsContainedWithinASingleMonth(LocalDate lower, LocalDate upper) {
