@@ -10,5 +10,5 @@ import java.util.List;
 public class RatingChange {
     private Discipline discipline;
 
-    private List<Integer> points;
+    private List<Point> points;
 }

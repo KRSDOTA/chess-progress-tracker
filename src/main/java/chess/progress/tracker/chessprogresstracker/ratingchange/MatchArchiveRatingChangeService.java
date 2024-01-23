@@ -6,6 +6,7 @@ import chess.progress.tracker.chessprogresstracker.matcharchive.MatchArchiveServ
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -77,19 +78,19 @@ public class MatchArchiveRatingChangeService implements RatingChangeService {
         final RatingChange ratingChange = new RatingChange();
         ratingChange.setDiscipline(Discipline.valueOf(discipline.toUpperCase()));
 
-        final List<Integer> pointChangesAcrossGames = disciplineMatches
+        final List<Point> pointChangesAcrossGames = disciplineMatches
                 .stream()
-                .map(match -> findColourPlayerAndReturnRating(match, username))
+                .map(match -> findColourPlayerAndReturnPoint(match, username))
                 .toList();
 
         ratingChange.setPoints(pointChangesAcrossGames);
         return ratingChange;
     }
 
-    private Integer findColourPlayerAndReturnRating(Match match, String username) {
+    private Point findColourPlayerAndReturnPoint(Match match, String username) {
         if (match.getBlack().getUsername().equalsIgnoreCase(username)) {
-            return match.getBlack().getRating();
+            return new Point(match.getBlack().getRating(), LocalDate.ofInstant(match.getEnd_time(), timezoneService.getZoneId()));
         }
-        return match.getWhite().getRating();
+        return new Point(match.getWhite().getRating(), LocalDate.ofInstant(match.getEnd_time(), timezoneService.getZoneId()));
     }
 }
