@@ -6,7 +6,6 @@ import chess.progress.tracker.chessprogresstracker.matcharchive.MatchArchiveServ
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -89,8 +88,8 @@ public class MatchArchiveRatingChangeService implements RatingChangeService {
 
     private Point findColourPlayerAndReturnPoint(Match match, String username) {
         if (match.getBlack().getUsername().equalsIgnoreCase(username)) {
-            return new Point(match.getBlack().getRating(), LocalDate.ofInstant(match.getEnd_time(), timezoneService.getZoneId()));
+            return new Point(match.getBlack().getRating(), LocalDate.ofInstant(match.getEnd_time(), timezoneService.getZoneId()).toString());
         }
-        return new Point(match.getWhite().getRating(), LocalDate.ofInstant(match.getEnd_time(), timezoneService.getZoneId()));
+        return new Point(match.getWhite().getRating(), LocalDate.ofInstant(match.getEnd_time(), timezoneService.getZoneId()).toString());
     }
 }
